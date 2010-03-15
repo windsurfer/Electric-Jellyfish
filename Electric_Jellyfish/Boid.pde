@@ -227,8 +227,7 @@ class Boid
       
      //Jelly image code
      imageMode( CENTER );//To fix the Positioning
-     if (is_moving()){
-       
+     if (is_moving()){     
        if (jellyCount < 30)
        {
          jellyX -=1;  

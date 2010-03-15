@@ -14,7 +14,7 @@ class Particle {
     vel = new PVector(random(-1,1),random(-2,0),0);
     loc = l.get();
     //r = 10.0;
-    r = random(5,20);//Low, High
+    r = random(5,10);//Low, High //Image is 15px, when you start adding the volume to it, it looks fugly. Keep it max 10-12. :)
     timer = 100.0;//Lifetime
     particleImage = imageRef;
   }

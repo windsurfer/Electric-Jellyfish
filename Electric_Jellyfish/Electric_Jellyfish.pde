@@ -1,10 +1,8 @@
-//Electric Jellyfish - an audio visualizer by Shaughn Perrozzino WIP
- 
+//Electric Jellyfish - an audio visualizer by Shaughn Perrozzino
 //Simple Particle System by Daniel Shiffman- from Processing.org was the basis of the particle class
 //Minin library http://code.compartmental.net/2007/03/27/minim-an-audio-library-for-processing/
-//Can has graphics?
+
 import processing.opengl.*; 
-//Can has audio?
 import ddf.minim.*;
 import ddf.minim.analysis.*;
 
@@ -20,16 +18,21 @@ int trackNum;
 float volume;
 int songNum =1;
 int numSongs =5;
+
 //Beat detection
 BeatDetect beat;
 BeatListener bl; 
+
 //Parrticle System
 ParticleSystem bubbles;
 ParticleSystem ps;
+
+//Main
 PImage backgroundA; 
 int blendAlpha;
+
 //Boids
-int numBoids = 25;
+int numBoids = 20;
 ArrayList boids;
 PFont verdanaFont;
 PVector posVect;
@@ -42,8 +45,8 @@ PImage particle;
  void setup()
  {
   //size(640, 480, OPENGL);
-  //size(640, 480, OPENGL);
-  size(screen.width-100, screen.height-100, OPENGL);
+  //size(screen.width, screen.height, OPENGL);
+  size(screen.width-100, screen.height-100, OPENGL);//For testing purposes keeps it nicely sized
   frameRate(30);//Keep it reasonable
   
   colorMode(RGB, 255, 255, 255, 100);//RGB255wAlpha
@@ -53,7 +56,7 @@ PImage particle;
   ps = new ParticleSystem(1, new PVector(width/2,height/2,0), particle);
   
   backgroundA = loadImage("data/gradientA.jpg");
-  blendAlpha = 64;
+  blendAlpha = 64;//For blending the background.
   
   //Fills/Drawing
   fill(0);
@@ -152,7 +155,7 @@ void draw()
      if ( beat.isSnare()){
        float rand = random(width);
        float rand2 = random(height);
-       float rand3= random(10,30);
+       float rand3= random(10,20);
        for (int i=0; i < rand3; i++){
          ps.addParticle(rand,rand2);
        }
@@ -170,7 +173,7 @@ void draw()
              //currBoid.run(volume, volume);//Volume is quite dramatic... 
              //Technically runs another Boid under the first, making them blend nicely. :D
              currBoid.run(1,1);//Add a boid at current location, size 1,1.
-             currBoid.shove();
+             //currBoid.shove();
            }
   }
   
@@ -178,6 +181,12 @@ void draw()
       println(" beat.isSnare()");
        //fill(255,255,255, 10);
        //rect(0,0, screen.width,screen.height);   //OMG FLICKER
+       for ( int i=0; i<boids.size(); i++ )
+           {
+             Boid currBoid = (Boid) boids.get(i);
+             currBoid.shove();
+             bubbles.addParticle(currBoid.loc.x,currBoid.loc.y);
+           }
    }
 
    //Boids Draw after background...
