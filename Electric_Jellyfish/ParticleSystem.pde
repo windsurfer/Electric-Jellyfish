@@ -31,7 +31,9 @@ class ParticleSystem {
   }
 
   void addParticle() {
-    particles.add(new Particle(origin,particleImage));
+    Particle part = new Particle(origin,particleImage);
+    part.vel.mult(7);
+    particles.add(part);
   }
   
     void addParticle(float x, float y) {
