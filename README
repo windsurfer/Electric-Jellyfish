@@ -1,0 +1,8 @@
+Electric Jellyfish
+
+This is an audio-visualizer written in processing.
+This is for an assignment for IMD3901 - Design studio in the BIT program. I'm having fun with it.
+
+It uses the minim beat detection plugin for the Java sound api. http://code.compartmental.net/tools/minim/
+
+Currently it runs only with embedded files - but I will be implementing it as a screensaver/visualizer for media players.
