@@ -1,8 +1,16 @@
 Electric Jellyfish
+------------------
 
 This is an audio-visualizer written in processing.
 This is for an assignment for IMD3901 - Design studio in the BIT program. I'm having fun with it.
 
-It uses the minim beat detection plugin for the Java sound api. http://code.compartmental.net/tools/minim/
+It uses the minim library for the Java sound api. http://code.compartmental.net/tools/minim/
 
-Currently it runs only with embedded files - but I will be implementing it as a screensaver/visualizer for media players.
+Currently it runs only with embedded files - but I will be implementing it as a screensaver/visualizer for media players. :)
+
+Regarding MP3s:
+I didn't include the mp3s in the repo for size/copyright reasons.
+
+To get things working (and avoiding null pointer refs) you are required to add mp3 to the project under /Electric_Jellyfish/data/
+
+Naming convention as it stands is song_i.mp3, "i" being 1-5.
