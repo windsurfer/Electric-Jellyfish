@@ -8,7 +8,9 @@ class Boid
   
   float maxspeed;
   float maxforce; 
-  float wandertheta = 0.5f;
+  float wandertheta = 0.0f;
+  float move_mag = 0.5f;
+  float drag = 0.95f;
   
   // colour
   color col;
@@ -37,8 +39,8 @@ class Boid
     acc = new PVector( 0, 0 );
     vel = new PVector( random(-3, 3), random(-3, 3) );
 
-    maxspeed = random( 1.0f, 2.5f );
-    maxforce = 0.1f;
+    maxspeed = random( 2.0f, 3.5f );
+    maxforce = 0.01f;
   }
   
   void run(float x, float y)
@@ -61,6 +63,8 @@ class Boid
     
     // add our acceleration vector to our velocity
     vel.add( acc );
+    // take into consideration some drag
+    vel.mult(drag);
     // make sure our velocity is capped at maxspeed
     vel.limit( maxspeed );
     // add to our location to move us
@@ -136,9 +140,9 @@ class Boid
   {
     // get the steering vector that will adjust us towards the target
     // false is passed in to not slowdown
-    //PVector steerVec = steer( target, false );    
+    PVector steerVec = steer( target, true );    
     // add steering vector 
-    //acc.add( steerVec );
+    acc.add( steerVec );
     
   }
   
@@ -146,7 +150,7 @@ class Boid
   {
     // get the steering vector that will adjust us towards the target
     // true is passed in to slowdown
-    PVector steerVec = steer( target, false );
+    PVector steerVec = steer( target, true );
     
     // add steering vector s
     acc.add( steerVec );
@@ -220,23 +224,52 @@ class Boid
       float theta = vel.heading2D() + radians(90);
       rotate(theta);
       
+      
      //Jelly image code
      imageMode( CENTER );//To fix the Positioning
-     if (jellyCount < 30)
-     {
-       jellyX -=1;  
-       jellyY +=1.5;
+     if (is_moving()){
+       
+       if (jellyCount < 30)
+       {
+         jellyX -=1;  
+         jellyY +=1.5;
+       }else if (jellyCount < 60){
+         jellyX +=1;  
+         jellyY -=1.5;
+       }else{
+         jellyCount=-1;
+       }
        jellyCount++;
-     }else if (jellyCount < 60){
-       jellyX +=1;  
-       jellyY -=1.5;
-       jellyCount++;
-     }else{
-              jellyCount=0;
-     }
+     }/*else{
+         //jellyCount=0;
+         
+         // slowly bring the values back to a normal range
+         
+         if (jellyX < 90){
+           jellyX+=1.5;
+         }else if (jellyX > 130){
+           jellyX-=1.5;
+         }
+         
+         if (jellyY < 50){
+           jellyY +=1;
+         }else if (jellyY > 60){
+           jellyY -=1;
+         }
+         
+      }*/
+     
    
-  image( img, 0, 0, (jellyX*addX), (jellyY*addY)); 
-  image( img2, 0, 55, (jellyX*addX), 75); 
-  popMatrix();
+    image( img, 0, 0, (jellyX*addX), (jellyY*addY)); 
+    image( img2, 0, 55, (jellyX*addX), 75); 
+    popMatrix();
+  }
+  
+  boolean is_moving(){
+    return vel.mag() > move_mag;
+  }
+  void shove(){
+    vel.normalize();
+    vel.mult( random(maxspeed/2, maxspeed));
   }
 }

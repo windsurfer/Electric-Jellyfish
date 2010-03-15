@@ -14,7 +14,7 @@ class Particle {
     vel = new PVector(random(-1,1),random(-2,0),0);
     loc = l.get();
     //r = 10.0;
-    r = random(5,10);//Low, High
+    r = random(5,20);//Low, High
     timer = 100.0;//Lifetime
     particleImage = imageRef;
   }
@@ -29,6 +29,7 @@ class Particle {
   void update() {
     vel.add(acc);
     loc.add(vel);
+    acc.mult(random(0.85,1.15));
     timer -= 1.0;
   }
 

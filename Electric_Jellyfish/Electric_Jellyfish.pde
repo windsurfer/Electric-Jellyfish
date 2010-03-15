@@ -29,7 +29,7 @@ ParticleSystem ps;
 PImage backgroundA; 
 int blendAlpha;
 //Boids
-int numBoids = 15;
+int numBoids = 25;
 ArrayList boids;
 PFont verdanaFont;
 PVector posVect;
@@ -152,8 +152,10 @@ void draw()
      if ( beat.isSnare()){
        float rand = random(width);
        float rand2 = random(height);
-       float rand3= random(2,8);
-       for (int i=0; i < rand3; i++){ps.addParticle(rand,rand2);}
+       float rand3= random(10,30);
+       for (int i=0; i < rand3; i++){
+         ps.addParticle(rand,rand2);
+       }
      }  
      
     //Bubbles
@@ -168,6 +170,7 @@ void draw()
              //currBoid.run(volume, volume);//Volume is quite dramatic... 
              //Technically runs another Boid under the first, making them blend nicely. :D
              currBoid.run(1,1);//Add a boid at current location, size 1,1.
+             currBoid.shove();
            }
   }
   
